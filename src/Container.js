@@ -51,6 +51,7 @@ const cardTarget = {
 }))
 export default class Container extends React.Component {
   static proptypes = {
+    cards: PropTypes.array,
     itemRender: PropTypes.func.isRequired,
     style: PropTypes.object,
     className: PropTypes.string,
@@ -59,11 +60,14 @@ export default class Container extends React.Component {
     itemTagName: PropTypes.string,
     itemClassName: PropTypes.string,
     itemStyle: PropTypes.object,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
+    cards: [],
     horizontal: false,
     itemTagName: 'div',
+    onChange: () => {},
   }
 
   constructor(props) {
@@ -71,6 +75,16 @@ export default class Container extends React.Component {
     this.state = {
       cards: props.cards,
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.cards !== this.props.cards) {
+      this.setState({cards: nextProps.cards})
+    }
+  }
+
+  handleChange = type => {
+    this.props.onChange(this.state.cards, type)
   }
 
   render() {
@@ -120,6 +134,7 @@ export default class Container extends React.Component {
           $splice: [[index, 1]],
         },
       }),
+      () => this.handleChange('delete')
     )
   }
 
@@ -130,6 +145,7 @@ export default class Container extends React.Component {
           $splice: [[index, 0, data]],
         },
       }),
+      () => this.handleChange('insert')
     )
   }
 
@@ -143,6 +159,7 @@ export default class Container extends React.Component {
           $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
         },
       }),
+      () => this.handleChange('move')
     )
   }
 }

@@ -61,7 +61,8 @@ ReactDOM.render(<App />, document.getElementById('app'))
 
 | Property      | Default      | Type     | Description  |
 | :------------ | :----------- | :------- | :----------- |
-| containerID   | -            | Number / String | container id |
+| containerId   | -            | Number / String | container id |
+| cards         | -            | Arra     | data source |
 | name          | -            | String   | drag and drop can only effect in the same container or between containers which has the same name |
 | horizontal    | false        | Boolean  | drag type |
 | style         | -            | Object   | container style |
@@ -69,5 +70,6 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | itemTagName   | 'div'        | String   | item tag name, can be set to 'div' 'span' 'li'..., or omitted |
 | itemStyle     | -            | Object   | item style |
 | itemClassName | -            | Object   | item class |
-| itemRender    | -            | Function | item render function |
+| itemRender    | -            | Function(card, containerId, isDragging) | item render function |
+| onChange      | -            | Function(data, type: 'move' | 'insert' | 'delete') | a callback function, executed when the cards changed |
 
