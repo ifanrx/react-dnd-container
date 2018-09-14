@@ -38,7 +38,7 @@ const cardSource = {
   }
 }
 
-function checkDoAction(props, monitor, component) {
+function checkCanDoAction(props, monitor, component) {
   const hoverBoundingRect = findDOMNode(
     component,
   ).getBoundingClientRect()
@@ -94,7 +94,7 @@ const cardTarget = {
       return
     }
 
-    const canDoAction = checkDoAction(props, monitor, component)
+    const canDoAction = checkCanDoAction(props, monitor, component)
     if (!canDoAction) return
 
     if (props.containerId !== dragContainerId) {
@@ -155,7 +155,7 @@ export default class Card extends React.Component {
       connectDragSource(
         connectDropTarget(
           React.createElement(
-            tagName, 
+            tagName,
             {className, style: {cursor: 'move', ...style}},
             render(data, containerId, isDragging),
           )
