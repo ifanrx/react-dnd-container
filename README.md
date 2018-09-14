@@ -1,6 +1,9 @@
 # react-dnd-container
 A React library for sortable drag-and-drop rows or columns based on react-dnd lib.
 
+## Example
+https://ifanrx.github.io/react-dnd-container/
+
 ## Usage
 ```js
 export default class App extends React.Component {
@@ -58,7 +61,9 @@ ReactDOM.render(<App />, document.getElementById('app'))
 ```
 
 ## API
-
+```js
+<Container itemRender={this.itemRender} cards={this.state.cards} />
+```
 | Property      | Default      | Type     | Description  |
 | :------------ | :----------- | :------- | :----------- |
 | containerId   | -            | Number / String | container id |
