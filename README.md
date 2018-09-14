@@ -47,8 +47,8 @@ export default class App extends React.Component {
     }
     return (
       <div>
-        <Container name='test' style={style} itemRender={this.itemRender} containerId={1} cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
-        <Container name='test' style={style} itemRender={this.itemRender} containerId={2} cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container name='test' horizontal style={style} itemRender={this.itemRender} containerId={1} cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container name='test' horizontal style={style} itemRender={this.itemRender} containerId={2} cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
       </div>
     )
   }
@@ -71,5 +71,5 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | itemStyle     | -            | Object   | item style |
 | itemClassName | -            | Object   | item class |
 | itemRender    | -            | Function(card, containerId, isDragging) | item render function |
-| onChange      | -            | Function(data, type: 'move' | 'insert' | 'delete') | a callback function, executed when the cards changed |
+| onChange      | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
 
