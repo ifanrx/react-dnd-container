@@ -29,7 +29,7 @@ const cardSource = {
       index: props.index,
       deleteCard: props.deleteCard,
       data: props.data,
-      type: props.type,
+      name: props.name,
     }
   },
 
@@ -76,7 +76,10 @@ function checkCanDoAction(props, monitor, component) {
 
 const cardTarget = {
   canDrop(props, monitor) {
-    return props.type === monitor.getItem().type
+    if (!props.name) {
+      return props.containerId === monitor.getItem().containerId
+    }
+    return props.name === monitor.getItem().name
   },
 
   hover(props, monitor, component) {
@@ -123,11 +126,11 @@ const cardTarget = {
 export default class Card extends React.Component {
   static proptypes = {
     render: PropTypes.func.isRequired,
-    horizontal: PropTypes.bool,
-    type: PropTypes.string,
+    name: PropTypes.string,
     tagName: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
+    horizontal: PropTypes.bool,
   }
 
   static defaultProps = {

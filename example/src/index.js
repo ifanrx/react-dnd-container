@@ -11,7 +11,7 @@ const style_2 = {
   width: 100,
 }
 
-export default class SortableSimple extends React.Component {
+export default class App extends React.Component {
   state = {
     cards_1: [
       {
@@ -200,15 +200,15 @@ export default class SortableSimple extends React.Component {
   render() {
     return (
       <div>
-        <Container type='horizontal' style={style_1} horizontal itemRender={this.itemRender_1} containerId={1} cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
-        <Container type='horizontal' style={style_1} horizontal itemRender={this.itemRender_1} containerId={2} cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container name='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="1" cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container name='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="2" cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
         <div style={{display: 'flex'}}>
-          <Container type='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={3} cards={this.state.cards_3} />
-          <Container type='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={4} cards={this.state.cards_4} />
+          <Container name='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={3} cards={this.state.cards_3} />
+          <Container name='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={4} cards={this.state.cards_4} />
         </div>
       </div> 
     )
   }
 }
 
-ReactDOM.render(<SortableSimple />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById('app'))

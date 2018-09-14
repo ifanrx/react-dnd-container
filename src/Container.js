@@ -14,7 +14,10 @@ const update = require('immutability-helper')
 
 const cardTarget = {
   canDrop(props, monitor) {
-    return props.type === monitor.getItem().type
+    if (!props.name) {
+      return props.containerId === monitor.getItem().containerId
+    }
+    return props.name === monitor.getItem().name
   },
 
   hover(props, monitor, component) {
@@ -52,7 +55,7 @@ export default class Container extends React.Component {
     style: PropTypes.object,
     className: PropTypes.string,
     horizontal: PropTypes.bool,
-    type: PropTypes.string,
+    name: PropTypes.string,
     itemTagName: PropTypes.string,
     itemClassName: PropTypes.string,
     itemStyle: PropTypes.object,
@@ -78,7 +81,7 @@ export default class Container extends React.Component {
       style,
       className,
       horizontal,
-      type,
+      name,
       itemTagName,
       itemClassName,
       itemStyle,
@@ -94,7 +97,7 @@ export default class Container extends React.Component {
               className={itemClassName}
               style={itemStyle}
               key={card.id}
-              type={type}
+              name={name}
               containerId={containerId}
               index={i}
               moveCard={this.moveCard}
