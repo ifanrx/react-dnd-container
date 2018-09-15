@@ -72,9 +72,9 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | horizontal    | false        | Boolean  | drag type |
 | style         | -            | Object   | container style |
 | className     | -            | String   | container class |
-| itemTagName   | 'div'        | String   | item tag name, can be set to 'div' 'span' 'li'..., or omitted |
-| itemStyle     | -            | Object   | item style |
-| itemClassName | -            | Object   | item class |
+| itemTagName   | 'div'        | String   | item wrapper tag name, can be set to 'div' 'span' 'li'..., or omitted |
+| itemStyle     | -            | Object   | item wrapper style |
+| itemClassName | -            | Object   | item wrapper class |
 | itemRender    | -            | Function(card, containerId, isDragging) | item render function |
 | onChange      | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
 

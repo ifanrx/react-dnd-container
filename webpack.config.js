@@ -30,7 +30,7 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
     alias: {
-      'react-dnd-container': path.resolve(__dirname, 'src/index.js'),
+      'react-dnd-container': path.resolve(__dirname, 'index.js'),
     }
   },
   devServer: {
