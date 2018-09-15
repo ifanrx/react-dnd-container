@@ -7,11 +7,14 @@
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "deploy": "gh-pages -d example/dist",
-    "publish-demo": "npm run build && npm run deploy"
+    "publish-demo": "npm run build && npm run deploy",
+    "transpile": "babel src -d dist",
+    "prepublishOnly": "npm run transpile"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
