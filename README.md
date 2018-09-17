@@ -67,7 +67,7 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | Property      | Default      | Type     | Description  |
 | :------------ | :----------- | :------- | :----------- |
 | containerId   | -            | Number / String | container id |
-| cards         | -            | Array    | data source |
+| cards         | -            | Array    | data source, each item should has a unique id field |
 | name          | -            | String   | drag and drop can only effect in the same container or between containers which has the same name |
 | horizontal    | false        | Boolean  | drag type |
 | style         | -            | Object   | container style |
