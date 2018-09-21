@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-container",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,14 +13,30 @@
   },
   "author": "",
   "license": "ISC",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-dnd",
+    "component",
+    "components",
+    "drag",
+    "drop"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifanrx/react-dnd-container"
+  },
+  "bugs": {
+    "url": "https://github.com/ifanrx/react-dnd-container/issues"
+  },
   "dependencies": {
     "immutability-helper": "^2.7.1",
-    "react-dnd": "3",
+    "react-dnd": "^3.0.2",
     "react-dnd-html5-backend": "^5.0.1"
   },
   "peerDependencies": {
-    "react": "15",
-    "react-dom": "15"
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -32,6 +48,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "gh-pages": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7"
