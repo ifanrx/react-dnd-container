@@ -29,7 +29,7 @@ const cardSource = {
       index: props.index,
       deleteCard: props.deleteCard,
       data: props.data,
-      name: props.name,
+      group: props.group,
     }
   },
 
@@ -76,17 +76,20 @@ function checkCanDoAction(props, monitor, component) {
 
 const cardTarget = {
   canDrop(props, monitor) {
-    if (!props.name) {
+    if (!props.group) {
       return props.containerId === monitor.getItem().containerId
     }
-    return props.name === monitor.getItem().name
+    return props.group === monitor.getItem().group
   },
 
   hover(props, monitor, component) {
     if (!component) {
-      return null
+      return
     }
     if (!monitor.canDrop()) {
+      return
+    }
+    if (typeof props.canMove === 'function' && !props.canMove()) {
       return
     }
     const dragContainerId = monitor.getItem().containerId
@@ -131,12 +134,14 @@ export default class Card extends React.Component {
     className: PropTypes.string,
     style: PropTypes.object,
     horizontal: PropTypes.bool,
+    canMove: PropTypes.func,
   }
 
   static defaultProps = {
     render: () => {},
     horizontal: false,
     tagName: 'div',
+    canMove: () => true,
   }
 
   render() {

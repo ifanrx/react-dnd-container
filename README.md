@@ -50,8 +50,8 @@ export default class App extends React.Component {
     }
     return (
       <div>
-        <Container name='test' horizontal style={style} itemRender={this.itemRender} containerId={1} cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
-        <Container name='test' horizontal style={style} itemRender={this.itemRender} containerId={2} cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container group='test' horizontal style={style} itemRender={this.itemRender} containerId={1} cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container group='test' horizontal style={style} itemRender={this.itemRender} containerId={2} cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
       </div>
     )
   }
@@ -68,7 +68,7 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | :------------ | :----------- | :------- | :----------- |
 | containerId   | -            | Number / String | container id |
 | cards         | -            | Array    | data source, each item should has a unique id field |
-| name          | -            | String   | drag and drop can only effect in the same container or between containers which has the same name |
+| group         | -            | String   | drag and drop can only effect in the same container or between containers which has the same group name |
 | horizontal    | false        | Boolean  | drag type |
 | style         | -            | Object   | container style |
 | className     | -            | String   | container class |
@@ -77,4 +77,5 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | itemClassName | -            | Object   | item wrapper class |
 | itemRender    | -            | Function(card, containerId, isDragging) | item render function |
 | onChange      | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
+| canMove       | () => true   | Function() => bool | a hook function for determining whether the change can be effected |
 

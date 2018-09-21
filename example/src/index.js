@@ -197,14 +197,18 @@ export default class App extends React.Component {
     )
   }
 
+  canMove = () => {
+    return true
+  }
+
   render() {
     return (
       <div>
-        <Container name='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="1" cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} onChange={(data, type) => this.setState({cards_1: data})} />
-        <Container name='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="2" cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
+        <Container canMove={this.canMove} group='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="1" cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} onChange={(data, type) => this.setState({cards_1: data})} />
+        <Container canMove={this.canMove} group='a' horizontal style={style_1} itemRender={this.itemRender_1} containerId="2" cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} />
         <div style={{display: 'flex'}}>
-          <Container name='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={3} cards={this.state.cards_3} />
-          <Container name='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={4} cards={this.state.cards_4} />
+          <Container canMove={this.canMove} group='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={3} cards={this.state.cards_3} />
+          <Container canMove={this.canMove} group='vertical' style={style_2, {margin: '0 10px', minWidth: 100}} itemRender={this.itemRender_2} containerId={4} cards={this.state.cards_4} />
         </div>
       </div> 
     )
