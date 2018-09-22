@@ -14,6 +14,9 @@ const update = require('immutability-helper')
 
 const cardTarget = {
   canDrop(props, monitor) {
+    if (props.disableDropAction) {
+      return false
+    }
     if (!props.group) {
       return props.containerId === monitor.getItem().containerId
     }
@@ -25,9 +28,6 @@ const cardTarget = {
       return
     }
     if (!monitor.canDrop()) {
-      return
-    }
-    if (typeof props.canMove === 'function' && !props.canMove()) {
       return
     }
     const dragContainerId = monitor.getItem().containerId
@@ -64,7 +64,8 @@ export default class Container extends React.Component {
     itemClassName: PropTypes.string,
     itemStyle: PropTypes.object,
     onChange: PropTypes.func,
-    canMove: PropTypes.func,
+    disableDragAction: PropTypes.bool,
+    disableDropAction: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -72,7 +73,8 @@ export default class Container extends React.Component {
     horizontal: false,
     itemTagName: 'div',
     onChange: () => {},
-    canMove: () => true,
+    disableDragAction: false,
+    disableDropAction: false,
   }
 
   constructor(props) {
@@ -95,18 +97,17 @@ export default class Container extends React.Component {
   render() {
     const {
       connectDropTarget,
-      containerId,
       itemRender,
       style,
       className,
-      horizontal,
-      group,
       itemTagName,
       itemClassName,
       itemStyle,
-      canMove,
+      ...others,
     } = this.props
     const { cards } = this.state
+    delete others.cards
+    delete others.children
 
     return (
       connectDropTarget(
@@ -117,16 +118,13 @@ export default class Container extends React.Component {
               className={itemClassName}
               style={itemStyle}
               key={card.id}
-              group={group}
-              containerId={containerId}
               index={i}
               moveCard={this.moveCard}
               deleteCard={this.deleteCard}
               insertCard={this.insertCard}
               render={itemRender}
               data={card}
-              canMove={canMove}
-              horizontal={horizontal}
+              {...others}
             />
           ))}
         </div>

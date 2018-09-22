@@ -22,6 +22,10 @@ const style = {
 }
 
 const cardSource = {
+  canDrag(props, monitor) {
+    return !props.disableDragAction
+  },
+
   beginDrag(props) {
     return {
       id: props.data.id,
@@ -76,6 +80,9 @@ function checkCanDoAction(props, monitor, component) {
 
 const cardTarget = {
   canDrop(props, monitor) {
+    if (props.disableDropAction) {
+      return false
+    }
     if (!props.group) {
       return props.containerId === monitor.getItem().containerId
     }
@@ -87,9 +94,6 @@ const cardTarget = {
       return
     }
     if (!monitor.canDrop()) {
-      return
-    }
-    if (typeof props.canMove === 'function' && !props.canMove()) {
       return
     }
     const dragContainerId = monitor.getItem().containerId
@@ -134,28 +138,33 @@ export default class Card extends React.Component {
     className: PropTypes.string,
     style: PropTypes.object,
     horizontal: PropTypes.bool,
-    canMove: PropTypes.func,
+    disableDragAction: PropTypes.bool,
+    disableDropAction: PropTypes.bool,
   }
 
   static defaultProps = {
     render: () => {},
     horizontal: false,
     tagName: 'div',
-    canMove: () => true,
+    disableDragAction: false,
+    disableDropAction: false,
   }
 
   render() {
     const {
-      isDragging,
       connectDragSource,
       connectDropTarget,
-      containerId,
       render,
       data,
       tagName,
       className,
       style,
+      ...others,
     } = this.props
+    delete others.moveCard
+    delete others.deleteCard
+    delete others.insertCard
+    delete others.onChange
 
     return (
       connectDragSource &&
@@ -164,8 +173,11 @@ export default class Card extends React.Component {
         connectDropTarget(
           React.createElement(
             tagName,
-            {className, style: {cursor: 'move', ...style}},
-            render(data, containerId, isDragging),
+            {className, style: {
+              cursor: !others.disableDragAction ? 'move' : 'default',
+              ...style,
+            }},
+            render(data, others),
           )
         ),
       )

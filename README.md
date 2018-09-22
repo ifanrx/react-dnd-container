@@ -26,7 +26,7 @@ export default class App extends React.Component {
     ],
   }
 
-  itemRender(itemData, containerId, isDragging) {
+  itemRender(itemData, props) {
     const style = {
       border: '1px dashed gray',
       padding: '0.5rem 1.6rem',
@@ -36,7 +36,7 @@ export default class App extends React.Component {
     }
     const cardStyle = {
       background: itemData.color,
-      opacity: isDragging ? 0.5 : 1,
+      opacity: props.isDragging ? 0.5 : 1,
     }
     return (
       <div style={{ ...style, ...cardStyle }}>{itemData.text}</div>
@@ -64,18 +64,19 @@ ReactDOM.render(<App />, document.getElementById('app'))
 ```js
 <Container itemRender={this.itemRender} cards={this.state.cards} />
 ```
-| Property      | Default      | Type     | Description  |
-| :------------ | :----------- | :------- | :----------- |
-| containerId   | -            | Number / String | container id |
-| cards         | -            | Array    | data source, each item should has a unique id field |
-| group         | -            | String   | drag and drop can only effect in the same container or between containers which has the same group name |
-| horizontal    | false        | Boolean  | drag type |
-| style         | -            | Object   | container style |
-| className     | -            | String   | container class |
-| itemTagName   | 'div'        | String   | item wrapper tag name, can be set to 'div' 'span' 'li'..., or omitted |
-| itemStyle     | -            | Object   | item wrapper style |
-| itemClassName | -            | Object   | item wrapper class |
-| itemRender    | -            | Function(card, containerId, isDragging) | item render function |
-| onChange      | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
-| canMove       | () => true   | Function() => bool | a hook function for determining whether the change can be effected |
+| Property          | Default      | Type     | Description  |
+| :---------------- | :----------- | :------- | :----------- |
+| containerId       | -            | Number / String | container id |
+| cards             | -            | Array    | data source, each item should has a unique id field |
+| group             | -            | String   | drag and drop can only effect in the same container or between containers which has the same group name |
+| horizontal        | false        | Boolean  | drag type |
+| style             | -            | Object   | container style |
+| className         | -            | String   | container class |
+| itemTagName       | 'div'        | String   | item wrapper tag name, can be set to 'div' 'span' 'li'..., or omitted |
+| itemStyle         | -            | Object   | item wrapper style |
+| itemClassName     | -            | Object   | item wrapper class |
+| itemRender        | -            | Function(card, props) | item render function |
+| onChange          | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
+| disableDragAction | false        | Boolean  | Whether 'drag' action is disabled |
+| disableDropAction | false        | Boolean  | Whether 'drop' action is disabled |
 
