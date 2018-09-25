@@ -14,15 +14,18 @@ const update = require('immutability-helper')
 
 const cardTarget = {
   canDrop(props, monitor) {
-    if (!props.name) {
+    if (props.disableDropAction) {
+      return false
+    }
+    if (!props.group) {
       return props.containerId === monitor.getItem().containerId
     }
-    return props.name === monitor.getItem().name
+    return props.group === monitor.getItem().group
   },
 
   hover(props, monitor, component) {
     if (!component) {
-      return null
+      return
     }
     if (!monitor.canDrop()) {
       return
@@ -56,11 +59,13 @@ export default class Container extends React.Component {
     style: PropTypes.object,
     className: PropTypes.string,
     horizontal: PropTypes.bool,
-    name: PropTypes.string,
+    group: PropTypes.string,
     itemTagName: PropTypes.string,
     itemClassName: PropTypes.string,
     itemStyle: PropTypes.object,
     onChange: PropTypes.func,
+    disableDragAction: PropTypes.bool,
+    disableDropAction: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -68,6 +73,8 @@ export default class Container extends React.Component {
     horizontal: false,
     itemTagName: 'div',
     onChange: () => {},
+    disableDragAction: false,
+    disableDropAction: false,
   }
 
   constructor(props) {
@@ -90,17 +97,17 @@ export default class Container extends React.Component {
   render() {
     const {
       connectDropTarget,
-      containerId,
       itemRender,
       style,
       className,
-      horizontal,
-      name,
       itemTagName,
       itemClassName,
       itemStyle,
+      ...others,
     } = this.props
     const { cards } = this.state
+    delete others.cards
+    delete others.children
 
     return (
       connectDropTarget(
@@ -111,15 +118,13 @@ export default class Container extends React.Component {
               className={itemClassName}
               style={itemStyle}
               key={card.id}
-              name={name}
-              containerId={containerId}
               index={i}
               moveCard={this.moveCard}
               deleteCard={this.deleteCard}
               insertCard={this.insertCard}
               render={itemRender}
               data={card}
-              horizontal={horizontal}
+              {...others}
             />
           ))}
         </div>

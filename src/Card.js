@@ -22,6 +22,10 @@ const style = {
 }
 
 const cardSource = {
+  canDrag(props, monitor) {
+    return !props.disableDragAction
+  },
+
   beginDrag(props) {
     return {
       id: props.data.id,
@@ -29,7 +33,7 @@ const cardSource = {
       index: props.index,
       deleteCard: props.deleteCard,
       data: props.data,
-      name: props.name,
+      group: props.group,
     }
   },
 
@@ -76,15 +80,18 @@ function checkCanDoAction(props, monitor, component) {
 
 const cardTarget = {
   canDrop(props, monitor) {
-    if (!props.name) {
+    if (props.disableDropAction) {
+      return false
+    }
+    if (!props.group) {
       return props.containerId === monitor.getItem().containerId
     }
-    return props.name === monitor.getItem().name
+    return props.group === monitor.getItem().group
   },
 
   hover(props, monitor, component) {
     if (!component) {
-      return null
+      return
     }
     if (!monitor.canDrop()) {
       return
@@ -131,26 +138,33 @@ export default class Card extends React.Component {
     className: PropTypes.string,
     style: PropTypes.object,
     horizontal: PropTypes.bool,
+    disableDragAction: PropTypes.bool,
+    disableDropAction: PropTypes.bool,
   }
 
   static defaultProps = {
     render: () => {},
     horizontal: false,
     tagName: 'div',
+    disableDragAction: false,
+    disableDropAction: false,
   }
 
   render() {
     const {
-      isDragging,
       connectDragSource,
       connectDropTarget,
-      containerId,
       render,
       data,
       tagName,
       className,
       style,
+      ...others,
     } = this.props
+    delete others.moveCard
+    delete others.deleteCard
+    delete others.insertCard
+    delete others.onChange
 
     return (
       connectDragSource &&
@@ -159,8 +173,11 @@ export default class Card extends React.Component {
         connectDropTarget(
           React.createElement(
             tagName,
-            {className, style: {cursor: 'move', ...style}},
-            render(data, containerId, isDragging),
+            {className, style: {
+              cursor: !others.disableDragAction ? 'move' : 'default',
+              ...style,
+            }},
+            render(data, others),
           )
         ),
       )
