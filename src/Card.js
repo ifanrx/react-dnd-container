@@ -12,15 +12,6 @@ import {
 } from 'react-dnd'
 import PropTypes from 'prop-types'
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1.6rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-  color: 'white',
-}
-
 const cardSource = {
   canDrag(props, monitor) {
     return !props.disableDragAction
@@ -28,17 +19,17 @@ const cardSource = {
 
   beginDrag(props) {
     return {
-      id: props.data.id,
+      id: props.card_data.id,
       containerId: props.containerId,
-      index: props.index,
-      deleteCard: props.deleteCard,
-      data: props.data,
+      index: props.card_index,
+      deleteCard: props.card_deleteCard,
+      data: props.card_data,
       group: props.group,
     }
   },
 
   isDragging(props, monitor) {
-    return props.data.id === monitor.getItem().data.id
+    return props.card_data.id === monitor.getItem().data.id
   }
 }
 
@@ -48,7 +39,7 @@ function checkCanDoAction(props, monitor, component) {
   ).getBoundingClientRect()
   const dragContainerId = monitor.getItem().containerId
   const dragIndex = monitor.getItem().index
-  const hoverIndex = props.index
+  const hoverIndex = props.card_index
 
   if (props.horizontal) {
     const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2
@@ -98,7 +89,7 @@ const cardTarget = {
     }
     const dragContainerId = monitor.getItem().containerId
     const dragIndex = monitor.getItem().index
-    const hoverIndex = props.index
+    const hoverIndex = props.card_index
 
     if (dragContainerId === props.containerId &&  dragIndex === hoverIndex) {
       return
@@ -109,11 +100,11 @@ const cardTarget = {
 
     if (props.containerId !== dragContainerId) {
       monitor.getItem().deleteCard(dragIndex)
-      props.insertCard(hoverIndex, monitor.getItem().data)
+      props.card_insertCard(hoverIndex, monitor.getItem().data)
       monitor.getItem().containerId = props.containerId
-      monitor.getItem().deleteCard = props.deleteCard
+      monitor.getItem().deleteCard = props.card_deleteCard
     } else {
-      props.moveCard(dragIndex, hoverIndex)
+      props.card_moveCard(dragIndex, hoverIndex)
     }
     monitor.getItem().index = hoverIndex
   },
@@ -132,20 +123,20 @@ const cardTarget = {
 )
 export default class Card extends React.Component {
   static proptypes = {
-    render: PropTypes.func.isRequired,
-    name: PropTypes.string,
-    tagName: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
+    containerId: PropTypes.string,
+    card_render: PropTypes.func.isRequired,
+    group: PropTypes.string,
     horizontal: PropTypes.bool,
+    card_moveCard: PropTypes.func,
+    card_deleteCard: PropTypes.func,
+    card_insertCard: PropTypes.func,
     disableDragAction: PropTypes.bool,
     disableDropAction: PropTypes.bool,
   }
 
   static defaultProps = {
-    render: () => {},
+    card_render: () => {},
     horizontal: false,
-    tagName: 'div',
     disableDragAction: false,
     disableDropAction: false,
   }
@@ -154,32 +145,30 @@ export default class Card extends React.Component {
     const {
       connectDragSource,
       connectDropTarget,
-      render,
-      data,
-      tagName,
-      className,
-      style,
+      card_render,
+      card_data,
       ...others,
     } = this.props
-    delete others.moveCard
-    delete others.deleteCard
-    delete others.insertCard
+    delete others.card_moveCard
+    delete others.card_deleteCard
+    delete others.card_insertCard
     delete others.onChange
+    others.index = others.card_index
+    delete others.card_index
+
+    const element = card_render(card_data, others)
 
     return (
       connectDragSource &&
       connectDropTarget &&
-      connectDragSource(
-        connectDropTarget(
-          React.createElement(
-            tagName,
-            {className, style: {
-              cursor: !others.disableDragAction ? 'move' : 'default',
-              ...style,
-            }},
-            render(data, others),
-          )
+      React.cloneElement(
+        connectDragSource(
+          connectDropTarget(element),
         ),
+        {...element.props, style: {
+          cursor: !others.disableDragAction ? 'move' : 'default',
+          ...element.props.style,
+        }},
       )
     )
   }

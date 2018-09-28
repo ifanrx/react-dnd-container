@@ -10,17 +10,15 @@ import {
 import HTML5Backend from 'react-dnd-html5-backend'
 import Card from './Card'
 import PropTypes from 'prop-types'
-const update = require('immutability-helper')
+import update from 'immutability-helper'
+import uuid from 'uuid'
 
 const cardTarget = {
   canDrop(props, monitor) {
     if (props.disableDropAction) {
       return false
     }
-    if (!props.group) {
-      return props.containerId === monitor.getItem().containerId
-    }
-    return props.group === monitor.getItem().group
+    return props.group && props.group === monitor.getItem().group
   },
 
   hover(props, monitor, component) {
@@ -34,7 +32,7 @@ const cardTarget = {
     const dragIndex = monitor.getItem().index
 
     // Don't replace items with themselves
-    if (dragContainerId === props.containerId) {
+    if (dragContainerId === component.containerId) {
       return
     }
 
@@ -42,7 +40,7 @@ const cardTarget = {
     component.insertCard(index, monitor.getItem().data)
     monitor.getItem().deleteCard(dragIndex)
     monitor.getItem().deleteCard = component.deleteCard
-    monitor.getItem().containerId = props.containerId
+    monitor.getItem().containerId = component.containerId
     monitor.getItem().index = index
   },
 }
@@ -60,9 +58,6 @@ export default class Container extends React.Component {
     className: PropTypes.string,
     horizontal: PropTypes.bool,
     group: PropTypes.string,
-    itemTagName: PropTypes.string,
-    itemClassName: PropTypes.string,
-    itemStyle: PropTypes.object,
     onChange: PropTypes.func,
     disableDragAction: PropTypes.bool,
     disableDropAction: PropTypes.bool,
@@ -71,7 +66,6 @@ export default class Container extends React.Component {
   static defaultProps = {
     cards: [],
     horizontal: false,
-    itemTagName: 'div',
     onChange: () => {},
     disableDragAction: false,
     disableDropAction: false,
@@ -82,6 +76,7 @@ export default class Container extends React.Component {
     this.state = {
       cards: props.cards,
     }
+    this.containerId = uuid()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,9 +95,6 @@ export default class Container extends React.Component {
       itemRender,
       style,
       className,
-      itemTagName,
-      itemClassName,
-      itemStyle,
       ...others,
     } = this.props
     const { cards } = this.state
@@ -114,17 +106,15 @@ export default class Container extends React.Component {
         <div className={className} style={style}>
           {cards.map((card, i) => (
             <Card
-              tagName={itemTagName}
-              className={itemClassName}
-              style={itemStyle}
               key={card.id}
-              index={i}
-              moveCard={this.moveCard}
-              deleteCard={this.deleteCard}
-              insertCard={this.insertCard}
-              render={itemRender}
-              data={card}
+              card_index={i}
+              card_moveCard={this.moveCard}
+              card_deleteCard={this.deleteCard}
+              card_insertCard={this.insertCard}
+              card_render={itemRender}
+              card_data={card}
               {...others}
+              containerId={this.containerId}
             />
           ))}
         </div>

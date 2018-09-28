@@ -185,6 +185,7 @@ export default class App extends React.Component {
 
   itemRender_1(itemData, props) {
     const style = {
+      display: 'inline-block',
       border: '1px dashed gray',
       padding: '0.5rem 1.6rem',
       marginBottom: '.5rem',
@@ -272,17 +273,17 @@ export default class App extends React.Component {
       <div style={{padding: 15}}>
         {this.settingRender()}
         <div style={{marginBottom: 10, marginTop: 20}}>containerA</div>
-        <Container horizontal style={style_1} itemRender={this.itemRender_1} containerId="1" cards={this.state.cards_1} itemTagName='div' itemStyle={{display: 'inline-block'}} onChange={(data, type) => this.setState({cards_1: data})} {...this.state.setting_1} />
+        <Container horizontal style={style_1} itemRender={this.itemRender_1} cards={this.state.cards_1} onChange={(data, type) => this.setState({cards_1: data})} {...this.state.setting_1} />
         <div style={{marginBottom: 10, marginTop: 20}}>containerB</div>
-        <Container horizontal style={style_1} itemRender={this.itemRender_1} containerId="2" cards={this.state.cards_2} itemTagName='div' itemStyle={{display: 'inline-block'}} {...this.state.setting_2} />
+        <Container horizontal style={style_1} itemRender={this.itemRender_1} cards={this.state.cards_2} {...this.state.setting_2} />
         <div style={{display: 'flex'}}>
           <div>
             <div style={{marginBottom: 10, marginTop: 20}}>containerC</div>
-            <Container style={style_2, {marginRight: 50, minWidth: 100}} itemRender={this.itemRender_2} containerId={3} cards={this.state.cards_3} {...this.state.setting_3} />
+            <Container style={style_2, {marginRight: 50, minWidth: 100}} itemRender={this.itemRender_2} cards={this.state.cards_3} {...this.state.setting_3} />
           </div>
           <div>
             <div style={{marginBottom: 10, marginTop: 20}}>containerD</div>
-            <Container style={style_2, {marginRight: 50, minWidth: 100}} itemRender={this.itemRender_2} containerId={4} cards={this.state.cards_4} {...this.state.setting_4} />
+            <Container style={style_2, {marginRight: 50, minWidth: 100}} itemRender={this.itemRender_2} cards={this.state.cards_4} {...this.state.setting_4} />
           </div>
         </div>
       </div>
