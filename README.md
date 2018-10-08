@@ -4,6 +4,12 @@ A React library for sortable drag-and-drop rows or columns based on react-dnd li
 ## Example
 https://ifanrx.github.io/react-dnd-container/
 
+## Installation
+```bash
+npm install --save react-dnd-container  # npm
+yarn add react-dnd-container  # yarn
+```
+
 ## Usage
 ```js
 export default class App extends React.Component {
@@ -68,7 +74,7 @@ ReactDOM.render(<App />, document.getElementById('app'))
 | horizontal        | false        | Boolean  | drag type |
 | style             | -            | Object   | container style |
 | className         | -            | String   | container class |
-| itemRender        | -            | Function(card, props) | item render function |
+| itemRender        | -            | Function(itemData, props) | item render function |
 | onChange          | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
 | disableDragAction | false        | Boolean  | Whether 'drag' action is disabled |
 | disableDropAction | false        | Boolean  | Whether 'drop' action is disabled |
