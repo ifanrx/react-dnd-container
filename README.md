@@ -69,13 +69,13 @@ ReactDOM.render(<App />, document.getElementById('app'))
 ```
 | Property          | Default      | Type     | Description  |
 | :---------------- | :----------- | :------- | :----------- |
-| cards             | -            | Array    | data source, each item should has a unique id field |
-| group             | -            | String   | drag and drop can only effect in the same container or between containers which has the same group name |
+| cards             | -            | Array    | data source, each item should have a unique id field |
+| group             | -            | String   | drag and drop can only effect in the same container or between containers which have the same group name |
 | horizontal        | false        | Boolean  | drag type |
 | style             | -            | Object   | container style |
 | className         | -            | String   | container class |
 | itemRender        | -            | Function(itemData, props) | item render function |
 | onChange          | -            | Function(data, type: 'move' / 'insert' / 'delete') | a callback function, executed when the cards changed |
-| disableDragAction | false        | Boolean  | Whether 'drag' action is disabled |
-| disableDropAction | false        | Boolean  | Whether 'drop' action is disabled |
+| disableDragAction | false        | Boolean  | whether 'drag' action is disabled |
+| disableDropAction | false        | Boolean  | whether 'drop' action is disabled |
 
